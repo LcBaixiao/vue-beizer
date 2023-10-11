@@ -12,7 +12,7 @@
 
 <script>
 
-import CurveComponent from "@/views/component/bezier/CurveComponent.vue";
+import CurveComponent from "./CurveComponent.vue";
 import {mapMutations, mapState} from "vuex";
 
 export default {

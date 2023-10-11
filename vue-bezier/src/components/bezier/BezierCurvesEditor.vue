@@ -65,8 +65,8 @@
 <script>
 
 import {PiecewiseBezier} from "three.quarks";
-import CurveComponent from "@/views/component/bezier/CurveComponent.vue";
-import HandleComponent from "@/views/component/bezier/HandleComponent.vue";
+import CurveComponent from "./CurveComponent.vue";
+import HandleComponent from "./HandleComponent.vue";
 
 
 const ZOOM_POW = Math.sqrt(Math.sqrt(2));

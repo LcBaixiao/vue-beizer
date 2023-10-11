@@ -8,7 +8,7 @@
 
 <script>
 
-import TransformComponent from "@/views/component/bezier/TransformComponent.vue";
+import TransformComponent from "./TransformComponent.vue";
 
 export default {
   name: 'CurveComponent',
