@@ -14,8 +14,10 @@
 
 import CurveComponent from "./CurveComponent.vue";
 import {mapMutations, mapState} from "vuex";
+import { PiecewiseBezier } from "three.quarks";
 
 export default {
+  name: "BezierCurvesViewer",
   props: {
     width: {
       type: Number,
@@ -27,7 +29,7 @@ export default {
     },
     value: {
       type: Object,
-      required: true
+      default: () => new PiecewiseBezier()
     },
     curveWidth: {
       type: Number,
@@ -36,6 +38,9 @@ export default {
     curveColor: {
       type: String,
       default: "#000"
+    },
+    onChange: {
+      type: Function,
     }
   },
   computed: {
@@ -65,6 +70,39 @@ export default {
     handleClick() {
       this.setEditableBezier(this.value)
     },
+    getPureBezierArr(obj) {
+      let result = []
+      let startXArr = []
+      if(obj && obj instanceof PiecewiseBezier){
+        obj.functions.forEach((arr, index) => {
+          let p = arr[0].p
+          const startX = arr[1]
+          const endX = obj.functions[index + 1] ? obj.functions[index + 1][1] : 1
+          let xGap = (endX - startX) / 3
+          let points = [
+            {
+              x: startX,
+              y: p[0]
+            },
+            {
+              x: startX + xGap,
+              y: p[1]
+            },
+            {
+              x: endX - xGap,
+              y: p[2]
+            },
+            {
+              x: endX,
+              y: p[3]
+            }
+          ]
+          result.push(points)
+          startXArr.push(arr[1])
+        })
+      }
+      return result
+    },
     updateCurves() {
       for (let i = 0; i < this.value.numOfFunctions; i++) {
         const x1 = this.value.getStartX(i);
@@ -83,6 +121,9 @@ export default {
         this.$set(this.curves, i, curve)
         this.$set(this.curves[i], this.curves[i].bez, curve.bez)
       }
+
+      this.$props.onChange(this.value, this.getPureBezierArr(this.value))
+
     }
   },
   mounted() {

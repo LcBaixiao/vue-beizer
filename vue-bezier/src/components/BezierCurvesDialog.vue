@@ -11,6 +11,7 @@ import {mapMutations, mapState} from "vuex";
 import BezierCurvesEditor from "./bezier/BezierCurvesEditor.vue";
 
 export default {
+  name: "BezierCurvesDialog",
   components: {
     BezierCurvesEditor
   },
@@ -55,5 +56,6 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 
 </style>
